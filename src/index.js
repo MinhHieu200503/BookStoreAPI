@@ -14,7 +14,6 @@ mongoose.connect(process.env.URL_MONGODB)
     console.log("Connected mongoDB")
 }).catch((err)=>{
     console.log("Connected mongoDB "+err)
-
 })
 
 routes(app);

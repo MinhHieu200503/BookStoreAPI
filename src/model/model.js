@@ -15,6 +15,8 @@ const BookSchema = new mongoose.Schema({
         type:mongoose.Schema.Types.ObjectId,
         ref:"authorName"
     }
+},{
+    versionKey: false
 }) 
 
 const AuthorSchema = new mongoose.Schema({
@@ -29,8 +31,13 @@ const AuthorSchema = new mongoose.Schema({
     books:[{
         typeof:mongoose.Schema.Types.ObjectId,
         ref:BookSchema
-    }]
-})
+    }],
+    
+},{
+    versionKey: false
+}
+)
+
 const Book = mongoose.model("bookName",BookSchema)
 const Author = mongoose.model("authorName",AuthorSchema)
 module.exports = {Book,Author}
