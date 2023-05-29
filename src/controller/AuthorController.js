@@ -11,8 +11,8 @@ const AuthorController = {
     },
     getAllAuthor:async(req,res)=>{
         try {
-            const books = await Author.find();
-            res.status(200).json(books);
+            const author = await Author.find().populate("books");
+            res.status(200).json(author);
         } catch (error) {
             res.status(200).json(error);
         }
@@ -35,6 +35,7 @@ const AuthorController = {
     },
     deleteAnAuthor:async(req,res)=>{
         try {
+            await Book.updateOne({"author._id":req.params.id},{$set:{author:null}})
             const result = await Author.deleteOne({_id:req.params.id});
             res.status(200).json(result);
         } catch (error) {

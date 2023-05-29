@@ -12,7 +12,7 @@ const BookController = {
     },
     getAllBook:async(req,res)=>{
         try {
-            const books = await model.Book.find();
+            const books = await model.Book.find().populate("author");
             res.status(200).json(books);
         } catch (error) {
             res.status(500).json("error")
@@ -20,7 +20,7 @@ const BookController = {
     },
     getABook:async(req,res)=>{
         try {
-            const book  = await model.Book.findById(req.params.id);
+            const book  = await model.Book.findById(req.params.id).populate("author");
             res.status(200).json(book)
         } catch (error) {
             res.status(500).json(error)
@@ -36,6 +36,7 @@ const BookController = {
     },
     deleteABook:async(req,res)=>{
         try {
+            await model.Author.updateOne({_id:model.Book.findById(req.params.id).author},{$push:{books:{_id:req.params.id}}})
             const result = await model.Book.findByIdAndDelete(req.params.id);
             res.status(200).json(result)    
         } catch (error) {
